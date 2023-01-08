@@ -12,6 +12,8 @@ attrs==22.2.0
     # via
     #   jsonschema
     #   mediapipe
+av==10.0.0
+    # via -r requirements.in
 blinker==1.5
     # via streamlit
 cachetools==5.2.0
