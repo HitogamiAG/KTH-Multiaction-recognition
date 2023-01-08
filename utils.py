@@ -24,7 +24,7 @@ def load_model(model: torch.nn.Module, path_to_model):
     
     path_to_model = Path(path_to_model)
     assert path_to_model.is_file(), f"Incorrect load path: {path_to_model}"
-    assert path_to_model.endswith(".pth") or path_to_model.endswith(".pt"), "Model name should end with .pt or .pth"
+    assert path_to_model.__str__().endswith(".pth") or path_to_model.__str__().endswith(".pt"), "Model name should end with .pt or .pth"
     
     model.load_state_dict(torch.load(path_to_model))
     
