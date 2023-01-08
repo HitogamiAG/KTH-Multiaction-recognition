@@ -5,7 +5,7 @@ import tempfile
 from inference_scripts.video_processing import process_video
 from inference_scripts.inference import predict
 from models.model import LSTMModel
-from utils import load_model
+from local_utils import load_model
 
 model = LSTMModel(6, 30, 1, None)
 model = load_model(model, 'checkpoints/lstm_model_100e_92acc.pt')

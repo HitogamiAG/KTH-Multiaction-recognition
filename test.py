@@ -13,7 +13,7 @@ from time import time
 from data_scripts.dataloader import create_dataloader
 from models.model import LSTMModel
 from engine import train_step, val_step, evaluate
-from utils import load_model, report
+from local_utils import load_model, report
 
 parser = argparse.ArgumentParser('Parse train parameters')
 parser.add_argument('-tp', '--test_path', type=str, default=None)
