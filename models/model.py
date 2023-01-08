@@ -4,6 +4,7 @@ from torch import nn
 class LSTMModel(nn.Module):
     def __init__(self, num_classes: int, input_size: int, num_layers: int, seq_length: int) -> None:
         super(LSTMModel, self).__init__()
+        self.labels = ['boxing', 'jogging', 'running', 'walking', 'handclapping', 'handwaving']
         self.num_classes = num_classes
         self.num_layers = num_layers
         self.input_size = input_size
