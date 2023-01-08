@@ -43,7 +43,7 @@ if st.button('Predict'):
                                          min_tracking_confidence, model_complexity, frames_diff)
 
         predicted_class = predict(model, dataframe, seq_length, step)
-        
+
         st.subheader(f'Predicted class: :red[**{predicted_class}**]')
 
         width = 50

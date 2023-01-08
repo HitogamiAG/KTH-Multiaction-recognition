@@ -39,13 +39,16 @@ if not args.model_path:
 test_shuffle = False
 num_workers = os.cpu_count()
 
-test_dataloader = create_dataloader(args.test_path, args.num_records, args.step, args.batch_size, test_shuffle, num_workers)
+test_dataloader = create_dataloader(
+    args.test_path, args.num_records, args.step, args.batch_size, test_shuffle, num_workers)
 
-model = LSTMModel(num_classes = args.num_classes, input_size = args.num_features, num_layers = 1, seq_length= args.num_records)
+model = LSTMModel(num_classes=args.num_classes, input_size=args.num_features,
+                  num_layers=1, seq_length=args.num_records)
 model = load_model(model, args.model_path)
 loss_fn = nn.CrossEntropyLoss()
 
-y_pred, y, test_loss, test_acc = evaluate(model, test_dataloader, loss_fn, args.device)
+y_pred, y, test_loss, test_acc = evaluate(
+    model, test_dataloader, loss_fn, args.device)
 print(f'Test loss: {test_loss} | Test acc: {test_acc}')
 
 report(y_pred, y)
