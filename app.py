@@ -4,11 +4,11 @@ import tempfile
 
 from inference_scripts.video_processing import process_video
 from inference_scripts.inference import predict
-from models.model import LSTMModel
+import onnxruntime as ort
 from local_utils import load_model
 
-model = LSTMModel(6, 30, 1, None)
-model = load_model(model, 'checkpoints/lstm_model_100e_92acc.pt')
+ort_session = ort.InferenceSession("checkpoints/lstm_8_15_30.onnx")
+seq_length = 15
 
 st.title('Multiaction recognition algorithm')
 
@@ -28,8 +28,6 @@ with col1:
 
 with col2:
     st.header('LSTM Model params')
-    seq_length = st.slider('**Sequence length**',
-                           min_value=5, max_value=30, value=15, step=1)
     step = st.slider('**Step**', min_value=1, max_value=10, value=5, step=1)
     frames_diff = st.slider('**Frame step**', min_value=1,
                             max_value=10, value=5, step=1)
@@ -42,7 +40,7 @@ if st.button('Predict'):
         video, dataframe = process_video(tfile.name, min_detection_confidence,
                                          min_tracking_confidence, model_complexity, frames_diff)
 
-        predicted_class = predict(model, dataframe, seq_length, step)
+        predicted_class = predict(ort_session, dataframe, seq_length, step)
 
         st.subheader(f'Predicted class: :red[**{predicted_class}**]')
 
