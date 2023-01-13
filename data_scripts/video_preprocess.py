@@ -3,13 +3,23 @@ import pandas as pd
 import os
 from pose_model import PoseEstimator
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 from tqdm import tqdm
 import cv2
 import mediapipe as mp
 
 
-def process_video(video_path: str, pose_estimator: PoseEstimator, frames_diff: int):
+def process_video(video_path: str, pose_estimator: PoseEstimator, frames_diff: int) -> List:
+    """Returns list of pose landmarks for each frame of the video
+
+    Args:
+        video_path (str): Path to the video
+        pose_estimator (PoseEstimator): Mediapipe Pose Model object
+        frames_diff (int): Step between frames of the video for pose estimation
+
+    Returns:
+        List: List of pose landmarks
+    """
     cap = cv2.VideoCapture(video_path)
 
     frame_counter = 0
@@ -39,7 +49,17 @@ def video_to_csv(data_path: str,
                  pose_estimator: PoseEstimator,
                  wish_landmarks: dict,
                  frames_diff: Optional[int] = 5,
-                 rewrite_exist: Optional[bool] = False):
+                 rewrite_exist: Optional[bool] = False) -> None:
+    """Generates and saves csv file with estimated pose landmarks for all the videos in the folder
+
+    Args:
+        data_path (str): Path to the folder with videos
+        csv_name (str): Name of generated csv file
+        pose_estimator (PoseEstimator): Mediapipe Pose Model object
+        wish_landmarks (dict): Dictionary where key is the name of landmark that should be extracted and value is index
+        frames_diff (Optional[int], optional): Step between frames of the video for pose estimation. Defaults to 5.
+        rewrite_exist (Optional[bool], optional): Rewrite csv if exists. Defaults to False.
+    """
     data_path = Path(data_path)
 
     csv_dict = {}

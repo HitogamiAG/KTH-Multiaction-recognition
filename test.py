@@ -16,15 +16,14 @@ from engine import train_step, val_step, evaluate
 from local_utils import load_model, report
 
 parser = argparse.ArgumentParser('Parse train parameters')
-parser.add_argument('-tp', '--test_path', type=str, default=None)
-parser.add_argument('-numc', '--num_classes', type=int, default=6)
-parser.add_argument('-numf', '--num_features', type=int, default=30)
-parser.add_argument('-numr', '--num_records', type=int, default=15)
-parser.add_argument('-nume', '--num_epochs', type=int, default=100)
-parser.add_argument('-s', '--step', type=int, default=5)
-parser.add_argument('-b', '--batch_size', type=int, default=8)
-parser.add_argument('-d', '--device', type=str, default='cpu')
-parser.add_argument('-mn', '--model_path', type=str, default=None)
+parser.add_argument('-tp', '--test_path', type=str, default=None, help='Path to the folder with test videos')
+parser.add_argument('-numc', '--num_classes', type=int, default=6, help='Number of classes')
+parser.add_argument('-numf', '--num_features', type=int, default=30, help='Number of values in one record')
+parser.add_argument('-numr', '--num_records', type=int, default=15, help='Sequence length')
+parser.add_argument('-s', '--step', type=int, default=5, help='Step between frames')
+parser.add_argument('-b', '--batch_size', type=int, default=8, help='Batch size')
+parser.add_argument('-d', '--device', type=str, default='cpu', help='Device (CPU/GPU)')
+parser.add_argument('-mp', '--model_path', type=str, default=None, help='Path to the model weights')
 
 args = parser.parse_args()
 

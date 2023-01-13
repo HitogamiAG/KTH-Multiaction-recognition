@@ -4,6 +4,14 @@ from torch import nn
 
 class LSTMModel(nn.Module):
     def __init__(self, num_classes: int, input_size: int, num_layers: int, seq_length: int) -> None:
+        """Initiale parameters of the model
+
+        Args:
+            num_classes (int): Number of classes
+            input_size (int): Number of elements in one record
+            num_layers (int): Number of layers in LSTM
+            seq_length (int): Number of records in one input example
+        """
         super(LSTMModel, self).__init__()
         self.labels = ['boxing', 'jogging', 'running',
                        'walking', 'handclapping', 'handwaving']
@@ -27,6 +35,14 @@ class LSTMModel(nn.Module):
         self.classifier = nn.Sequential(nn.Linear(32, self.num_classes))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Forward the input through model
+
+        Args:
+            x (torch.Tensor): Input
+
+        Returns:
+            torch.Tensor: Output
+        """
         h_1 = torch.zeros(self.num_layers, x.size(0), self.lstm_1_size)
         c_1 = torch.zeros(self.num_layers, x.size(0), self.lstm_1_size)
 

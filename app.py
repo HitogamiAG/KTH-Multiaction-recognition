@@ -7,9 +7,11 @@ from inference_scripts.inference import predict
 import onnxruntime as ort
 from local_utils import load_model
 
+# Create session for model inference
 ort_session = ort.InferenceSession("checkpoints/lstm_8_15_30.onnx")
 seq_length = 15
 
+# Upload video
 st.title('Multiaction recognition algorithm')
 
 video_data = st.file_uploader(
@@ -17,6 +19,7 @@ video_data = st.file_uploader(
 
 col1, col2 = st.columns(2)
 
+# Set parameters for mediapipe
 with col1:
     st.header('Mediapipe params')
     min_detection_confidence = st.slider(
@@ -26,12 +29,14 @@ with col1:
     model_complexity = st.slider(
         '**Model complexity**', min_value=0, max_value=2, value=1, step=1)
 
+# Set parameters for LSTM Model
 with col2:
     st.header('LSTM Model params')
     step = st.slider('**Step**', min_value=1, max_value=10, value=5, step=1)
     frames_diff = st.slider('**Frame step**', min_value=1,
                             max_value=10, value=5, step=1)
 
+# Recognize action and visualize result and processed video
 if st.button('Predict'):
     if video_data is not None:
 

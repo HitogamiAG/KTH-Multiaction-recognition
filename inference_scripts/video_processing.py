@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import mediapipe as mp
 from io import BytesIO
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 # initialize Pose estimator
 mp_drawing = mp.solutions.drawing_utils
@@ -29,7 +29,16 @@ landmarks_to_get_from_video = {'Nose': 0,
 width, height, fps = 160, 120, 25
 
 
-def track_points_to_dataframe(trackpoints: List, frames_diff: int):
+def track_points_to_dataframe(trackpoints: List, frames_diff: int) -> pd.DataFrame:
+    """From the given list of pose landmarks of the video, converts and returns dataframe with pose landmarks
+
+    Args:
+        trackpoints (List): List of estimated landmarks from each frame of the video
+        frames_diff (int): Step between frames to be saved in dataframe
+
+    Returns:
+        pd.DataFrame: Dataframe with pose landmarks
+    """
     trackpoints = trackpoints[::frames_diff]
     df_dict = {}
 
@@ -51,7 +60,20 @@ def process_video(path: str,
                   detect_conf: Optional[float] = 0.5,
                   track_conf: Optional[float] = 0.5,
                   model_complexity: Optional[int] = 1,
-                  frames_diff: Optional[int] = 5):
+                  frames_diff: Optional[int] = 5) -> Tuple[BytesIO, pd.DataFrame]:
+    """Function to process video to extract and save landmarks and its visualization on the video
+
+    Args:
+        path (str): Path to the video (temporary file)
+        detect_conf (float, optional): Detection confidence. Default to 0.5.
+        track_conf (float, optional): Tracking confidence. Default to 0.5.
+        model_complexity (int, optional): Complexity of mediapipe pose model. Default to 1.
+        frames_diff (int, optional): Difference between frames
+
+    Returns:
+        Tuple[BytesIO, pd.DataFrame]: Returns the bytes array of the video with visualized
+                                      landmarks and dataframe with estimated pose landmarks
+    """
 
     track_points = []
 

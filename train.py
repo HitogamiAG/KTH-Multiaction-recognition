@@ -16,18 +16,18 @@ from engine import train_step, val_step
 from local_utils import save_model
 
 parser = argparse.ArgumentParser('Parse train parameters')
-parser.add_argument('-tp', '--train_path', type=str, default=None)
-parser.add_argument('-vp', '--val_path', type=str, default=None)
-parser.add_argument('-numc', '--num_classes', type=int, default=6)
-parser.add_argument('-numf', '--num_features', type=int, default=30)
-parser.add_argument('-numr', '--num_records', type=int, default=15)
-parser.add_argument('-nume', '--num_epochs', type=int, default=100)
-parser.add_argument('-bw', '--balanced_class_weights', type=bool, default=True)
-parser.add_argument('-s', '--step', type=int, default=5)
-parser.add_argument('-b', '--batch_size', type=int, default=8)
-parser.add_argument('-d', '--device', type=str, default='cpu')
+parser.add_argument('-tp', '--train_path', type=str, default=None, help='Path to the folder with train videos')
+parser.add_argument('-vp', '--val_path', type=str, default=None, help='Path to the folder with validation videos')
+parser.add_argument('-numc', '--num_classes', type=int, default=6, help='Number of classes')
+parser.add_argument('-numf', '--num_features', type=int, default=30, help='Number of values in one record')
+parser.add_argument('-numr', '--num_records', type=int, default=15, help='Sequence length')
+parser.add_argument('-nume', '--num_epochs', type=int, default=100, help='Number of epochs to train model')
+parser.add_argument('-bw', '--balanced_class_weights', type=bool, default=True, help='Balance class weights')
+parser.add_argument('-s', '--step', type=int, default=5, help='Step between frames')
+parser.add_argument('-b', '--batch_size', type=int, default=8, help='Batch size')
+parser.add_argument('-d', '--device', type=str, default='cpu', help='Device (CPU/GPU)')
 parser.add_argument('-mn', '--model_name', type=str,
-                    default='model' + str(round(time())))
+                    default='model' + str(round(time())), help='Name of file with trained weights')
 
 args = parser.parse_args()
 

@@ -7,6 +7,13 @@ import numpy as np
 
 class CustomDataset(Dataset):
     def __init__(self, path: str, num_recors_in_input: int, step: int) -> None:
+        """Initialization function for custom dataset
+
+        Args:
+            path (str): Path to csv file
+            num_recors_in_input (int): e.g. sequense length of input example
+            step (int): step between input examples
+        """
         super(CustomDataset, self).__init__()
         self.labels = ['boxing', 'jogging', 'running',
                        'walking', 'handclapping', 'handwaving']
@@ -19,6 +26,8 @@ class CustomDataset(Dataset):
         self.extract_input_indices()
 
     def extract_input_indices(self):
+        """Generate the list of indices and classes that can be used to extrain input examples
+        """
         grouped_df = self.dataframe.groupby('src_video').agg(
             {'Nose_X': 'count', 'action': 'first', 'index': 'min'}).rename(columns={'Nose_X': 'n_frames'})
 
@@ -47,7 +56,20 @@ class CustomDataset(Dataset):
         return X * 100, label
 
 
-def create_dataloader(path_to_data: str, num_records_in_input: int, step: int, batch_size: int, shuffle: bool, num_workers: int):
+def create_dataloader(path_to_data: str, num_records_in_input: int, step: int, batch_size: int, shuffle: bool, num_workers: int) -> DataLoader:
+    """_summary_
+
+    Args:
+        path_to_data (str): path to csv file
+        num_records_in_input (int): e.g. sequense length of input example
+        step (int): step between input examples
+        batch_size (int): Number of input examples in one batch
+        shuffle (bool): Shuffle dataset
+        num_workers (int): Number of workers (e.g. threads)
+
+    Returns:
+        DataLoader: Dataloader for created custom dataset
+    """
     dataset = CustomDataset(path_to_data, num_records_in_input, step)
     dataloader = DataLoader(dataset, batch_size,
                             shuffle=shuffle, num_workers=num_workers)

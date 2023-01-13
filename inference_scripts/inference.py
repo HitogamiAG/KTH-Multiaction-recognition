@@ -1,16 +1,37 @@
 import torch
+import pandas as pd
+from onnxruntime import InferenceSession
 import numpy as np
 from torch import nn
+from typing import List
 
 labels = ['boxing', 'jogging', 'running',
                        'walking', 'handclapping', 'handwaving']
 
-def most_frequent(List):
-    return max(set(List), key=List.count)
+def most_frequent(list: List) -> int:
+    """Returns most frequent element of the list
+
+    Args:
+        list (List): Array of integer values
+
+    Returns:
+        int: most frequent value
+    """
+    return max(set(list), key=list.count)
 
 
-def predict(ort_session, dataframe, seq_length, step):
+def predict(ort_session: InferenceSession, dataframe: pd.DataFrame, seq_length: int, step: int) -> str:
+    """From the given dataframe with video landmarks predicts and return the name of the action
 
+    Args:
+        ort_session (InferenceSession): ONNX Runtime Inference session
+        dataframe (pd.DataFrame): Dataframe with video landmark
+        seq_length (int): sequense length of input example
+        step (int): step between input examples
+
+    Returns:
+        str: Name of recognized action
+    """
     dataframe = dataframe.to_numpy().astype(np.float32)
     X = []
     n_frames = len(dataframe)
